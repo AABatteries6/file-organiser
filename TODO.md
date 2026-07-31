@@ -3,7 +3,7 @@
 ## Version 1 - Basic File Organiser
 
 ### Core functionality
-- [ ] Accept folder path from user
+- [x] Accept folder path from user
 - [ ] Validate that the folder exists
 - [ ] Scan only files directly inside the selected folder
 - [ ] Ignore subfolders
