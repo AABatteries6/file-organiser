@@ -4,7 +4,7 @@
 
 ### Core functionality
 - [x] Accept folder path from user
-- [ ] Validate that the folder exists
+- [x] Validate that the folder exists
 - [ ] Scan only files directly inside the selected folder
 - [ ] Ignore subfolders
 - [ ] Identify file extensions
