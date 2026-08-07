@@ -17,11 +17,22 @@ def validate_folder(folder: Path):
         print("Path points to file, not folder.")
         return False
 
+def scan_folder(folder: Path):
+    # Returns exclusively a list of all files from the folder
+    files = []
+    for item in folder.iterdir():
+        if (item.is_file()):
+            files.append(item)
+
+    return files
+
 def main():
     folder = get_folder()
     print(folder)
     print(type(folder))
-    validate_folder(folder)
+    if validate_folder(folder):
+        file_list = scan_folder(folder)
+        print(file_list)
 
 
 if __name__ == "__main__":

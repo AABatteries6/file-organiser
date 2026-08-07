@@ -5,8 +5,8 @@
 ### Core functionality
 - [x] Accept folder path from user
 - [x] Validate that the folder exists
-- [ ] Scan only files directly inside the selected folder
-- [ ] Ignore subfolders
+- [x] Scan only files directly inside the selected folder
+- [x] Ignore subfolders
 - [ ] Identify file extensions
 - [ ] Categorise supported file types:
     - [ ] Images
