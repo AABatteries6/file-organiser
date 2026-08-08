@@ -26,6 +26,9 @@ def scan_folder(folder: Path):
 
     return files
 
+def get_extension(file: Path):
+    return file.suffix.lower()
+
 def main():
     folder = get_folder()
     print(folder)
@@ -33,6 +36,10 @@ def main():
     if validate_folder(folder):
         file_list = scan_folder(folder)
         print(file_list)
+
+        for file in file_list:
+            ext = get_extension(file)
+            print(ext)
 
 
 if __name__ == "__main__":
