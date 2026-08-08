@@ -8,12 +8,12 @@
 - [x] Scan only files directly inside the selected folder
 - [x] Ignore subfolders
 - [X] Identify file extensions
-- [ ] Categorise supported file types:
-    - [ ] Images
-    - [ ] Videos
-    - [ ] Audio
-    - [ ] Documents
-- [ ] Ignore unsupported file types
+- [x] Categorise supported file types:
+    - [x] Images
+    - [x] Videos
+    - [x] Audio
+    - [x] Documents
+- [x] Ignore unsupported file types
 - [ ] Create destination folders only when required
 - [ ] Build move plan before performing any moves
 - [ ] Execute planned file moves
