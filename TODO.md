@@ -14,8 +14,8 @@
     - [x] Audio
     - [x] Documents
 - [x] Ignore unsupported file types
+- [x] Build move plan before performing any moves
 - [ ] Create destination folders only when required
-- [ ] Build move plan before performing any moves
 - [ ] Execute planned file moves
 - [ ] Display completion message when finished
 

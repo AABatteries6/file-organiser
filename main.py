@@ -1,6 +1,7 @@
 from pathlib import Path
 import shutil
 
+# Dictionary of categories and supported extensions
 EXTENSION_CATEGORIES = {
     "Images": {
         ".jpg", ".jpeg", ".png", ".gif", ".bmp",
@@ -58,14 +59,30 @@ def scan_folder(folder: Path):
     return files
 
 def get_extension(file: Path):
+    # Returns extension of file in lowercase
     return file.suffix.lower()
 
 def categorise_extension(extension: str):
+    # Returns category of given extension
     for category, extensions in EXTENSION_CATEGORIES.items():
         if extension in extensions:
             return category
 
     return None
+
+def build_move_plan(files: list[Path]):
+    # Returns a dictionary of filepaths and their category
+    move_plan = {}
+    for file in files:
+        ext = get_extension(file)
+        cat = categorise_extension(ext)
+
+        if cat is not None:
+            move_plan[file] = cat
+
+    return move_plan   
+
+
 
 def main():
     folder = get_folder()
@@ -80,6 +97,8 @@ def main():
             print(ext)
             cat = categorise_extension(ext)
             print(cat)
+
+    print(build_move_plan(file_list))
 
 
 if __name__ == "__main__":
