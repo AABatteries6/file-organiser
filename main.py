@@ -70,9 +70,11 @@ def categorise_extension(extension: str):
 
     return None
 
+
 def build_move_plan(files: list[Path]):
-    # Returns a dictionary of filepaths and their category
+    # Returns a dictionary of filepaths and their category and the number of unsupported files
     move_plan = {}
+    unsupported_files_counter = 0
     for file in files:
         ext = get_extension(file)
         cat = categorise_extension(ext)
@@ -80,25 +82,81 @@ def build_move_plan(files: list[Path]):
         if cat is not None:
             move_plan[file] = cat
 
-    return move_plan   
+        else:
+            unsupported_files_counter +=1
+
+    return move_plan, unsupported_files_counter
+
+def validate_destinations(folder: Path, move_plan: dict[Path, str]):
+    # Checks whether the category destinations can be made
+    # Returns a list of folders that can, and another of conflicts
+    valid_categories = set()
+    conflicting_categories = set()
+
+    for cat in set(move_plan.values()):
+        destination = folder / cat
+
+        if destination.exists() and not destination.is_dir():
+            conflicting_categories.add(cat)  
+
+        else:
+            valid_categories.add(cat)
+
+    return valid_categories, conflicting_categories
+
+def create_valid_move_plan(move_plan: dict[Path, str], valid_categories: set[str]):
+    # Creates a valid move plan accounting for conflicts, and also returns counters for category and filename conflicts
+    valid_move_plan = {}
+    conflicting_category_files_counter = 0
+    conflicting_name_files_counter = 0
+
+    for file, category in move_plan.items():
+        if category in valid_categories:
+            parent_folder = file.parent
+            destination = parent_folder / category / file.name
+            if destination.exists():
+                conflicting_name_files_counter +=1
+
+            else:
+                valid_move_plan[file] = category
+
+
+        else:
+            conflicting_category_files_counter +=1
+
+    return valid_move_plan, conflicting_category_files_counter, conflicting_name_files_counter
+
+def create_category_folders(folder: Path, valid_move_plan: dict[Path, str]):
+    # Creates only the necessary category folders
+    categories = set(valid_move_plan.values())
+
+    for category in categories:
+        destination = folder / category
+        destination.mkdir(exist_ok=True)
 
 
 
 def main():
+    # Need to add a message for empty folder
     folder = get_folder()
-    print(folder)
-    print(type(folder))
     if validate_folder(folder):
         file_list = scan_folder(folder)
-        print(file_list)
+        move_plan, unsupported_files_counter = build_move_plan(file_list)
+        valid_categories, conflicting_categories = validate_destinations(folder, move_plan)
+        if conflicting_categories:
+            conflicting_categories_no = len(conflicting_categories)
+            print(f"{conflicting_categories_no} category folder(s) cannot be made due to other files in {folder}" 
+                  f" having identical names. The categories are: ")
+            for category in conflicting_categories:
+                print(category)
+            
+        valid_move_plan, conflicting_category_files_counter, conflicting_name_files_counter = create_valid_move_plan(move_plan, valid_categories)
+        # create_category_folders(folder, valid_move_plan)
+        print(valid_move_plan)
+        unmovable_files_no = conflicting_category_files_counter + conflicting_name_files_counter
+        if unmovable_files_no > 0:
+            print(f"{unmovable_files_no} files cannot be organised.")
 
-        for file in file_list:
-            ext = get_extension(file)
-            print(ext)
-            cat = categorise_extension(ext)
-            print(cat)
-
-    print(build_move_plan(file_list))
 
 
 if __name__ == "__main__":

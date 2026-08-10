@@ -15,7 +15,7 @@
     - [x] Documents
 - [x] Ignore unsupported file types
 - [x] Build move plan before performing any moves
-- [ ] Create destination folders only when required
+- [x] Create destination folders only when required
 - [ ] Execute planned file moves
 - [ ] Display completion message when finished
 
