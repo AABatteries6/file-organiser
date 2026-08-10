@@ -134,6 +134,12 @@ def create_category_folders(folder: Path, valid_move_plan: dict[Path, str]):
         destination = folder / category
         destination.mkdir(exist_ok=True)
 
+def move_files(valid_move_plan: dict[Path, str]):
+    # This moves files from original position to their intended destination
+    for file, category in valid_move_plan.items():
+        destination = file.parent / category / file.name
+        shutil.move(file, destination)
+
 
 
 def main():
@@ -151,11 +157,18 @@ def main():
                 print(category)
             
         valid_move_plan, conflicting_category_files_counter, conflicting_name_files_counter = create_valid_move_plan(move_plan, valid_categories)
-        # create_category_folders(folder, valid_move_plan)
-        print(valid_move_plan)
-        unmovable_files_no = conflicting_category_files_counter + conflicting_name_files_counter
+        create_category_folders(folder, valid_move_plan)
+        unmovable_files_no = conflicting_category_files_counter + conflicting_name_files_counter + unsupported_files_counter
         if unmovable_files_no > 0:
-            print(f"{unmovable_files_no} files cannot be organised.")
+            print(f"{unmovable_files_no} file(s) cannot be organised.")
+
+        if valid_move_plan:
+            move_files(valid_move_plan)
+            print("All possible moves completed. Organising finished.")
+            move_counter=len(valid_move_plan)
+            print(f"{move_counter} files moved.")
+        else:
+            print("No moves could be made. Program finished")
 
 
 

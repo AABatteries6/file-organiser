@@ -16,13 +16,13 @@
 - [x] Ignore unsupported file types
 - [x] Build move plan before performing any moves
 - [x] Create destination folders only when required
-- [ ] Execute planned file moves
-- [ ] Display completion message when finished
+- [x] Execute planned file moves
+- [x] Display completion message when finished
 
 ### Safety checks
 - [ ] Do not move folders
 - [ ] Do not overwrite existing files
-- [ ] Handle files that cannot be moved
+- [x] Handle files that cannot be moved
 - [ ] Handle empty folders correctly
 
 ---
