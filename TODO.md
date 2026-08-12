@@ -28,8 +28,8 @@
 ## V1.1 Summary and Information for User 
 - [x] Handle empty folder with an appropriate message
 - [x] Handle folders containing only sub-folders with an appropriate message
-- [ ] Provide a concise, tidied summary of the organisation results
-- [ ] Offer the user the option to view more detailed information about files that could not be organised
-- [ ] Provide clear explanations for why files could not be organised
+- [x] Provide a concise, tidied summary of the organisation results
+- [x] Offer the user the option to view more detailed information about files that could not be organised
+- [x] Provide clear explanations for why files could not be organised
 
 ---

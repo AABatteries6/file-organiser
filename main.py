@@ -35,7 +35,7 @@ EXTENSION_CATEGORIES = {
 
 def get_folder():
     # This method takes a filepath input and converts to Path object
-    folder = Path(input("Enter folder path:  "))
+    folder = Path(input("Enter folder path:  ").strip())
     return folder
 
 def validate_folder(folder: Path):
@@ -161,28 +161,39 @@ def main():
         
         move_plan, unsupported_files_counter = build_move_plan(file_list)
         valid_categories, conflicting_categories = validate_destinations(folder, move_plan)
-
-        if conflicting_categories:
-            conflicting_categories_no = len(conflicting_categories)
-            print(f"{conflicting_categories_no} category folder(s) cannot be made due to other files in {folder}" 
-                  f" having identical names. The categories are: ")
-            for category in conflicting_categories:
-                print(category)
             
         valid_move_plan, conflicting_category_files_counter, conflicting_name_files_counter = create_valid_move_plan(move_plan, valid_categories)
         create_category_folders(folder, valid_move_plan)
-        
-        unmovable_files_no = conflicting_category_files_counter + conflicting_name_files_counter + unsupported_files_counter
-        if unmovable_files_no > 0:
-            print(f"{unmovable_files_no} file(s) cannot be organised.")
 
         if valid_move_plan:
             move_files(valid_move_plan)
-            print("All possible moves completed. Organising finished.")
+            print("Organisation completed!")
             move_counter=len(valid_move_plan)
             print(f"{move_counter} files moved.")
         else:
             print("No moves could be made. Program finished")
+
+        unmovable_files_no = conflicting_category_files_counter + conflicting_name_files_counter + unsupported_files_counter
+        if unmovable_files_no > 0:
+            print(f"{unmovable_files_no} file(s) could not be organised.")
+
+            further_information = input("If you want information regarding why some files could not be moved, type yes, else hit enter: ")
+            if further_information.strip().lower() == "yes":
+
+                if conflicting_categories:
+                            conflicting_categories_no = len(conflicting_categories)
+                            print(f"{conflicting_categories_no} category folder(s) could not be made due to other files in {folder}" 
+                                  f" having identical names. The categories are: ")
+                            for category in conflicting_categories:
+                                print(category)
+                            print(f"{conflicting_category_files_counter} file(s) could not be moved due to this issue.")
+
+                if conflicting_name_files_counter>0:
+                    print(f"{conflicting_name_files_counter} file(s) could not be moved due to files in the category destination folder having the same name.")
+
+                if unsupported_files_counter>0:
+                    print(f"{unsupported_files_counter} filetype(s) are unsupported in this version of the file organiser, so could not be moved.")
+
 
 
 
