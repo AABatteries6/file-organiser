@@ -149,7 +149,12 @@ def main():
     folder = get_folder()
 
     if validate_folder(folder):
-        file_list, contains_items = scan_folder(folder)
+
+        try:
+            file_list, contains_items = scan_folder(folder)
+        except OSError as e:
+            print(f"The folder could not be accessed: {e}")
+            return
 
         if not contains_items:
             print("This folder is empty.")
