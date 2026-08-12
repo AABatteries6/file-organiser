@@ -50,13 +50,15 @@ def validate_folder(folder: Path):
         return False
 
 def scan_folder(folder: Path):
-    # Returns exclusively a list of all files from the folder
+    # Returns an exclusive list of all files from the folder, and whether the folder contains items
     files = []
+    contains_items = False
     for item in folder.iterdir():
+        contains_items = True
         if (item.is_file()):
             files.append(item)
 
-    return files
+    return files, contains_items
 
 def get_extension(file: Path):
     # Returns extension of file in lowercase
@@ -143,12 +145,23 @@ def move_files(valid_move_plan: dict[Path, str]):
 
 
 def main():
-    # Need to add a message for empty folder
+
     folder = get_folder()
+
     if validate_folder(folder):
-        file_list = scan_folder(folder)
+        file_list, contains_items = scan_folder(folder)
+
+        if not contains_items:
+            print("This folder is empty.")
+            return
+
+        if not file_list:
+            print("This folder contains only sub-folders.")
+            return
+        
         move_plan, unsupported_files_counter = build_move_plan(file_list)
         valid_categories, conflicting_categories = validate_destinations(folder, move_plan)
+
         if conflicting_categories:
             conflicting_categories_no = len(conflicting_categories)
             print(f"{conflicting_categories_no} category folder(s) cannot be made due to other files in {folder}" 
@@ -158,6 +171,7 @@ def main():
             
         valid_move_plan, conflicting_category_files_counter, conflicting_name_files_counter = create_valid_move_plan(move_plan, valid_categories)
         create_category_folders(folder, valid_move_plan)
+        
         unmovable_files_no = conflicting_category_files_counter + conflicting_name_files_counter + unsupported_files_counter
         if unmovable_files_no > 0:
             print(f"{unmovable_files_no} file(s) cannot be organised.")

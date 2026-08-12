@@ -20,9 +20,16 @@
 - [x] Display completion message when finished
 
 ### Safety checks
-- [ ] Do not move folders
-- [ ] Do not overwrite existing files
+- [x] Do not move folders
+- [x] Do not overwrite existing files
 - [x] Handle files that cannot be moved
-- [ ] Handle empty folders correctly
+- [x] Handle empty folders correctly
+
+## V1.1 Summary and Information for User 
+- [x] Handle empty folder with an appropriate message
+- [x] Handle folders containing only sub-folders with an appropriate message
+- [ ] Provide a concise, tidied summary of the organisation results
+- [ ] Offer the user the option to view more detailed information about files that could not be organised
+- [ ] Provide clear explanations for why files could not be organised
 
 ---
