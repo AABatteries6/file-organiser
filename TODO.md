@@ -33,8 +33,8 @@
 - [x] Provide clear explanations for why files could not be organised
 
 ## V1.2 Exception Handling
-- [ ] Handle permission/os errors while scanning folder
-- [ ] Handle os errors while creating folders
+- [x] Handle permission/os errors while scanning folder
+- [x] Handle os errors while creating folders
 - [ ] Handle os errors when moving files
 - [ ] Decide how errors affecting only parts of program are represented in summary
 
